@@ -146,6 +146,7 @@ def station_stats(df):
     print("{} is the most popular combination of start station and end station.".format(popular_combination))
 
 def display_data(df):
+    """ Asks users if they want to see 2 more popular start and end station combination. """
     while True:
         word = input("Please enter 'Y' if you'd like to see 2 more popular start and end station combination: ")
         if word == "Y":
