@@ -148,6 +148,7 @@ def station_stats(df):
     print('-'*40)
 
 def display_data(df):
+    """ Asks users if they want to see 2 more popular start and end station combination. """
     while True:
         word = input("Please enter 'Y' if you'd like to see 2 more popular start and end station combination, Y/N: ")
         if word == "Y":
