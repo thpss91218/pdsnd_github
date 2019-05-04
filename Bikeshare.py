@@ -44,7 +44,7 @@ def get_filters():
 
     while True:
         day = input("Would you like to find out information for a specific day? \n If  not, enter 'all' to access data for the whole week:\n").lower()
-        if day not in ('monday','tuesday','wednesday','thursday','friday','all'):
+        if day not in ('monday','tuesday','wednesday','thursday','friday','saturday','sunday','all'):
             print("Incorrect input! Please try again.\n")
             continue
         else:
@@ -73,7 +73,7 @@ def load_data(city, month, day):
     if month != 'all':
         months = ['january','february', 'march', 'april', 'may',
                        'june']
-        month = month.index(month)+1
+        month = months.index(month)+1
         df = df[df['month'] == month]
 
 
@@ -87,6 +87,7 @@ def load_data(city, month, day):
 
 
     return df
+
 
 
 
@@ -137,22 +138,22 @@ def station_stats(df):
 
 
     # TO DO: display most frequent combination of start station and end station trip
-    df['combination_count'] = df['Start Station'].map(str) + '&' + df['End Station']
-    popular_combination = df['combination_count'].value_counts().idxmax()
+    df['combination'] = df['Start Station'].map(str) + '&' + df['End Station']
+    popular_combination = df['combination'].value_counts().idxmax()
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    print("The largest number of users travel from {} station, and the most of people return bike at {}               station.".format(popular_start_station, popular_end_station))
-    print("{} is the most popular combination of start station and end station.".format(popular_combination))
+    print("The largest number of users travel from {} station, and the most of people return bike at {} station.".format(popular_start_station, popular_end_station))
+    print("\n{} is the most popular combination of start station and end station.\n".format(popular_combination))
+    print('-'*40)
 
 def display_data(df):
     while True:
-        word = input("Please enter 'Y' if you'd like to see 2 more popular start and end station combination: ")
+        word = input("Please enter 'Y' if you'd like to see 2 more popular start and end station combination, Y/N: ")
         if word == "Y":
            i = 1
-           df['combination_count'] = df['Start Station'].map(str) + '&' + df['End Station']
-           popular_combination_1 = df['combination_count'].sort_values().iloc[i]
-           popular_combination_2 = df['combination_count'].sort_values().iloc[i+1]
+           popular_combination_1 = df['combination'].sort_values().iloc[i]
+           popular_combination_2 = df['combination'].sort_values().iloc[i+1]
 
            print("{}\n{}\n".format(popular_combination_1,popular_combination_2))
            i += 3
@@ -180,7 +181,7 @@ def trip_duration_stats(df):
 
 def user_stats(df):
     """Displays statistics on bikeshare users."""
-
+    print('-'*40)
     print('\nCalculating User Stats...\n')
     start_time = time.time()
 
@@ -204,9 +205,9 @@ def user_stats(df):
         earliest_year = birth_year.sort_values().iloc[0]
         recent_year = birth_year.sort_values().iloc[-1]
         common_year = birth_year.mode().iloc[0]
-        print(" The eldest user was born in {}.".format(earliest_year))
-        print(" The youngest user was born in {}.".format(recent_year))
-        print("The greatest number of users were born in {}.".format(common_year))
+        print("\nThe eldest user was born in {}.\n".format(earliest_year))
+        print("The youngest user was born in {}.\n".format(recent_year))
+        print("The greatest number of users were born in {}.\n".format(common_year))
     else:
         print("Birth year data is not available for Washington!")
 
